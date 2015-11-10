@@ -3,7 +3,7 @@ float radius = .8; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
 float renderSpace = 4; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
-String title = "Longer Ellipse"; //Name of whatever is being graphed
+String title = "Map back into circle"; //Name of whatever is being graphed
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -65,11 +65,11 @@ void setup() {
   }*/
   
   //Testing stuff
-  for (float i = -0.5; i < 0.5; i += 0.0001) {
+  for (float i = -2; i < 2; i += 0.0001) {
     origX.append(i);
     origX.append(i);
-    origY.append(sqrt(-sq(i/2) + sq(0.2)));
-    origY.append(-sqrt(-sq(i/2) + sq(0.2)));
+    origY.append(sqrt(-sq(i) + sq(2)) + 1.5);
+    origY.append(-sqrt(-sq(i) + sq(2)) + 1.5);
   }
   
   //#############
