@@ -1,9 +1,9 @@
 //Changeable Variables
 float radius = .8; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
-float renderSpace = 3; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
+float renderSpace = 4; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
-String title = "Test"; //Name of whatever is being graphed
+String title = "Off Center Ellipse"; //Name of whatever is being graphed
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -29,7 +29,10 @@ void setup() {
   smooth(4); //Anti-Aliasing
   noLoop(); //Only draw graph once
   
+  //##################################
   //Append coordinates to origXY lists
+  //##################################
+  
   //Square
   /*for (float i = 0.1; i < 0.7; i += 0.001) {
     //Right side
@@ -62,10 +65,16 @@ void setup() {
   }*/
   
   //Testing stuff
-  for (float i = 0.2; i < 0.5; i += 0.1) {
+  for (float i = -0.5; i < 0.5; i += 0.0001) {
     origX.append(i);
-    origY.append(i);
+    origX.append(i);
+    origY.append(sqrt(-sq(i/1.8) + sq(0.2)) + .4);
+    origY.append(-sqrt(-sq(i/1.8) + sq(0.2)) + .4);
   }
+  
+  //#############
+  //End of append
+  //#############
   
   //Calculate and append XY mapped coordinates to newXY lists (this is where the magic happens)
   for (int i = 0; i < origX.size(); i++) {
