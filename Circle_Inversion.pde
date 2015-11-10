@@ -141,6 +141,6 @@ void draw() {
     line(newPixelX.get(i), newPixelY.get(i), winSize / 2, winSize / 2); //Draw line from point to origin through original point
     */
   }
-  save(title + ".png"); //Saves the graph as an image
+  save("Saved Graphs/" + title + ".png"); //Saves the graph as an image
   //exit(); //Closes the program
 }
