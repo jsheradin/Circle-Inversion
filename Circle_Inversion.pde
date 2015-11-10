@@ -3,6 +3,7 @@ float radius = .8; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
 float renderSpace = 3; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
+String title = "Triangle"; //Name of whatever is being graphed
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -29,8 +30,8 @@ void setup() {
   noLoop(); //Only draw graph once
   
   //Append coordinates to origXY lists
-  //There is probably a better way to do this, but this gives a square
-  for (float i = 0.1; i < 0.7; i += 0.001) {
+  //Square
+  /*for (float i = 0.1; i < 0.7; i += 0.001) {
     //Right side
     origX.append(0.3);
     origY.append(i - .4);
@@ -43,6 +44,21 @@ void setup() {
     //Bottom
     origX.append(i - .4);
     origY.append(-0.3);
+  }*/
+  
+  //Three lines
+  for (float i = -0.5; i < 0.5; i += 0.0001) {
+    //Legs
+    if(i >= 0) {
+      origX.append(i);
+      origY.append(-i + 0.25);
+    } else {
+      origX.append(i);
+      origY.append(i + 0.25);
+    }
+    //Bottom
+    origX.append(i);
+    origY.append(-0.25);
   }
   
   //Calculate and append XY mapped coordinates to newXY lists (this is where the magic happens)
@@ -60,7 +76,7 @@ void setup() {
       newY.append(distance * sin(theta));
     } else { //If X should be negative
       newX.append(distance * -cos(theta));
-      newY.append(distance * sin(theta));
+      newY.append(distance * -sin(theta));
     }
     
     /*
@@ -110,6 +126,6 @@ void draw() {
     line(newPixelX.get(i), newPixelY.get(i), winSize / 2, winSize / 2); //Draw line from point to origin through original point
     */
   }
-  save("Test.png");
-  //exit();
+  save(title + ".png"); //Saves the graph as an image
+  //exit(); //Closes the program
 }
