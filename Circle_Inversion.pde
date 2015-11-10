@@ -3,7 +3,7 @@ float radius = .8; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
 float renderSpace = 3; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
-String title = "Triangle"; //Name of whatever is being graphed
+String title = "Test"; //Name of whatever is being graphed
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -46,8 +46,8 @@ void setup() {
     origY.append(-0.3);
   }*/
   
-  //Three lines
-  for (float i = -0.5; i < 0.5; i += 0.0001) {
+  //Triangle
+  /*for (float i = -0.5; i < 0.5; i += 0.0001) {
     //Legs
     if(i >= 0) {
       origX.append(i);
@@ -59,6 +59,12 @@ void setup() {
     //Bottom
     origX.append(i);
     origY.append(-0.25);
+  }*/
+  
+  //Testing stuff
+  for (float i = 0.2; i < 0.5; i += 0.1) {
+    origX.append(i);
+    origY.append(i);
   }
   
   //Calculate and append XY mapped coordinates to newXY lists (this is where the magic happens)
