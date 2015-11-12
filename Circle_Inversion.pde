@@ -59,7 +59,7 @@ void setup() {
   for (int i = 0; i < origX.size(); i++) {
     //Variables to store some of the calculations
     distance = sq(radius) / sqrt(sq(origX.get(i)) + sq(origY.get(i)));
-    //Angle of the line
+    //Angle of the line (Thanks C!)
     theta = atan(origY.get(i) / origX.get(i));
     
     //Turn distance and theta into XY
