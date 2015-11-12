@@ -1,10 +1,10 @@
 //Changeable Variables
 float radius = 1; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
-float renderSpace = 5; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
+float renderSpace = 4; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
-String title = "Triangle"; //Name of whatever is being graphed
-float res = 0.001; //Steps between points to graph (smaller the value, the higher the resolution)
+String title = "Ellipse"; //Name of whatever is being graphed
+float res = 0.001; //Steps between points to graph (smaller the value, the higher the resolution but longer processing time)
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -23,18 +23,32 @@ FloatList origPixelY = new FloatList();
 //Misc other varables
 float distance; //Length of line from origin to P prime
 float theta; //Angle of the line from
-float xLen;
-float yLen;
-float xSteps;
-float ySteps;
-float xDif;
-float yDif;
 
 void setup() {
-  //Each line is one line of a triangle
+  //Draw shapes here
+  
+  //Triangle
+  /*
   newLine(-0.5, -0.3, 0.0, 0.5);
   newLine(0.5, -0.3, 0.0, 0.5);
   newLine(-0.5, -0.3, 0.5, -0.3);
+  */
+  
+  //Square
+  /*
+  newLine(-0.5, -0.5, -0.5, 0.5); //Left side
+  newLine(0.5, -0.5, 0.5, 0.5); //Right side
+  newLine(-0.5, -0.5, 0.5, -0.5); //Bottom
+  newLine(-0.5, 0.5, 0.5, 0.5); //Top
+  */
+  
+  //Circle
+  /*
+  newEllipse(0, 0, .5, 1, 1);
+  */
+  
+  //Ellipse
+  newEllipse(0, 0, 0.3, .5, 1);
   
   size(winSize, winSize, P2D); //Set window size
   background(255); //Set background to white
@@ -110,6 +124,14 @@ void draw() {
 
 //Automated line maker
 void newLine(float startX, float startY, float endX, float endY) {
+  //Some local variables to work with
+  float xLen; //Distance from x to x
+  float yLen; //Distance from y to y
+  float xSteps; //Number of steps between them at current res
+  float ySteps; //Number of steps between them at current res
+  float xDif; //Distance between steps
+  float yDif; //Distance between steps
+  
   //Basic calculations
   xLen = endX - startX;
   yLen = endY - startY;
@@ -124,5 +146,15 @@ void newLine(float startX, float startY, float endX, float endY) {
   for (int i = 0; i < max(xSteps, ySteps); i++) {
     origX.append(startX + xDif * i);
     origY.append(startY + yDif * i);
+  }
+}
+
+//Automated circle maker
+void newEllipse(float oX, float oY, float rad, float xStretch, float yStretch) {
+  for (float i = -renderSpace; i < renderSpace; i += res) {
+    origX.append(i);
+    origY.append(sqrt(-sq(((i + oX) * xStretch)) + sq(rad)) + oY);
+    origX.append(i);
+    origY.append(-sqrt(-sq(((i + oX) * xStretch)) + sq(rad)) + oY);
   }
 }
