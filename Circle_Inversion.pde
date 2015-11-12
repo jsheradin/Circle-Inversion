@@ -1,9 +1,10 @@
 //Changeable Variables
-float radius = .8; //Radius of the circle that will be used to map
+float radius = 1; //Radius of the circle that will be used to map
 int winSize = 600; //Window size in pixels (window is square)
-float renderSpace = 4; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
+float renderSpace = 5; //Size of the environment to be rendered (ex. 5 will render -5 to 5 for both X and Y axiis)
 int point = 1; //Radius of the points that will be plotted
-String title = "Map back into circle"; //Name of whatever is being graphed
+String title = "Triangle"; //Name of whatever is being graphed
+float res = 0.001; //Steps between points to graph (smaller the value, the higher the resolution)
 
 //Lists for storing original values
 FloatList origX = new FloatList();
@@ -22,59 +23,23 @@ FloatList origPixelY = new FloatList();
 //Misc other varables
 float distance; //Length of line from origin to P prime
 float theta; //Angle of the line from
+float xLen;
+float yLen;
+float xSteps;
+float ySteps;
+float xDif;
+float yDif;
 
 void setup() {
+  //Each line is one line of a triangle
+  newLine(-0.5, -0.3, 0.0, 0.5);
+  newLine(0.5, -0.3, 0.0, 0.5);
+  newLine(-0.5, -0.3, 0.5, -0.3);
+  
   size(winSize, winSize); //Set window size
   background(255); //Set background to white
   smooth(4); //Anti-Aliasing
   noLoop(); //Only draw graph once
-  
-  //##################################
-  //Append coordinates to origXY lists
-  //##################################
-  
-  //Square
-  /*for (float i = 0.1; i < 0.7; i += 0.001) {
-    //Right side
-    origX.append(0.3);
-    origY.append(i - .4);
-    //Left Side
-    origX.append(-0.3);
-    origY.append(i - .4);
-    //Top
-    origX.append(i - .4);
-    origY.append(0.3);
-    //Bottom
-    origX.append(i - .4);
-    origY.append(-0.3);
-  }*/
-  
-  //Triangle
-  /*for (float i = -0.5; i < 0.5; i += 0.0001) {
-    //Legs
-    if(i >= 0) {
-      origX.append(i);
-      origY.append(-i + 0.25);
-    } else {
-      origX.append(i);
-      origY.append(i + 0.25);
-    }
-    //Bottom
-    origX.append(i);
-    origY.append(-0.25);
-  }*/
-  
-  //Testing stuff
-  for (float i = -2; i < 2; i += 0.0001) {
-    origX.append(i);
-    origX.append(i);
-    origY.append(sqrt(-sq(i) + sq(2)) + 1.5);
-    origY.append(-sqrt(-sq(i) + sq(2)) + 1.5);
-  }
-  
-  //#############
-  //End of append
-  //#############
   
   //Calculate and append XY mapped coordinates to newXY lists (this is where the magic happens)
   for (int i = 0; i < origX.size(); i++) {
@@ -107,8 +72,6 @@ void setup() {
   
   //Map XY corrdinates to pixel coordinates
   for (int i = 0; i < origX.size(); i++) {
-    //The mapping functions break if the min and max values are the same.
-    //If the program crashes here or doesn't show any points, that's why.
     origPixelX.append(map(origX.get(i), -renderSpace, renderSpace, 0, winSize)); //X of original point
     origPixelY.append(map(origY.get(i), -renderSpace, renderSpace, winSize, 0)); //Y of original point
     newPixelX.append(map(newX.get(i), -renderSpace, renderSpace, 0, winSize)); //X of mapped point
@@ -136,11 +99,30 @@ void draw() {
     fill(#FF0000); //Set fill to be red
     ellipse(newPixelX.get(i), newPixelY.get(i), point, point); //Plot mapped point
     
-    //Rays connecting the prime points to the origin through the original point
-    /*stroke(#00FF00); //Set line to green
-    line(newPixelX.get(i), newPixelY.get(i), winSize / 2, winSize / 2); //Draw line from point to origin through original point
-    */
+    //Rays connecting the prime points to the origin through the original point (looks bad)
+    //stroke(#00FF00); //Set line to green
+    //line(newPixelX.get(i), newPixelY.get(i), winSize / 2, winSize / 2); //Draw line from point to origin through original point
+    
   }
   save("Saved Graphs/" + title + ".png"); //Saves the graph as an image
   //exit(); //Closes the program
+}
+
+//Automated line maker
+void newLine(float startX, float startY, float endX, float endY) {
+  //Basic calculations
+  xLen = endX - startX;
+  yLen = endY - startY;
+  xSteps = xLen / res;
+  ySteps = yLen / res;
+  
+  //Increments to move the points along the line
+  xDif = xLen / max(xSteps, ySteps);
+  yDif = yLen / max(xSteps, ySteps);
+  
+  //Make points and append to list
+  for (int i = 0; i < max(xSteps, ySteps); i++) {
+    origX.append(startX + xDif * i);
+    origY.append(startY + yDif * i);
+  }
 }
