@@ -36,9 +36,9 @@ void setup() {
   newLine(0.5, -0.3, 0.0, 0.5);
   newLine(-0.5, -0.3, 0.5, -0.3);
   
-  size(winSize, winSize); //Set window size
+  size(winSize, winSize, P2D); //Set window size
   background(255); //Set background to white
-  smooth(4); //Anti-Aliasing
+  smooth(8); //Anti-Aliasing
   noLoop(); //Only draw graph once
   
   //Calculate and append XY mapped coordinates to newXY lists (this is where the magic happens)
