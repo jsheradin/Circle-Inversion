@@ -34,3 +34,5 @@ More will be added eventually.
 Compiles in Processing 2.2.1
 
 Special thanks to Pi!
+
+Hello Turnitin bot! I did not plagiarize this program. I'm the one who wrote it in the first place. :)
